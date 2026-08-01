@@ -89,7 +89,7 @@ export function createServer(env: Env) {
     "create_blog_post",
     {
       description:
-        "microCMS の blogs エンドポイントへ記事を作成します。デフォルトは下書きです。アイキャッチは先に upload_media でアップロードした URL を eyecatchUrl に渡してください。",
+        "microCMS の blogs エンドポイントへ記事を作成します。デフォルトは下書きです。eyecatchUrl 省略時は既存記事と同じデフォルト画像を設定します。別画像は upload_media の URL を eyecatchUrl に渡してください。",
       inputSchema: z.object({
         title: z.string().min(1).describe("記事タイトル"),
         content: z

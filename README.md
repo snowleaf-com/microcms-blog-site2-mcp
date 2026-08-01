@@ -13,7 +13,7 @@ ChatGPT などから microCMS（`hono-blog-app` / SnowLeaf）へ記事投稿・�
 記事スキーマは既存ブログと同じです。
 
 - `title` / `content`（必須）
-- `excerpt` / `eyecatch` / `tag` / `author`（任意）
+- `excerpt` / `eyecatch` / `tag` / `author`（任意。`eyecatchUrl` 省略時はデフォルト画像を自動設定）
 
 ## セットアップ
 
@@ -28,7 +28,10 @@ cp .dev.vars.example .dev.vars
 MICROCMS_SERVICE_DOMAIN=your-service-domain
 MICROCMS_API_KEY=your-api-key
 MCP_PASSWORD=任意のパスワード
+DEFAULT_EYECATCH_URL=https://images.microcms-assets.io/assets/.../no_image_yoko.jpg
 ```
+
+`DEFAULT_EYECATCH_URL` は省略可です。未設定の場合はコード内の既定値（既存公開記事と同じ `no_image_yoko.jpg`）を使います。
 
 APIキーには次の権限が必要です（`hono_blog_app` の読み取り専用キーのままだと投稿できません）。
 
