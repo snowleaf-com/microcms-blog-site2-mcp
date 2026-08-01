@@ -23,4 +23,9 @@ export type CreateBlogInput = {
   tagId: string;
   eyecatchUrl?: string;
   status?: "draft" | "published";
+  /**
+   * 公開日時（ISO 8601）。過去・未来いずれも指定可。
+   * 下書きには指定できないため、指定時は公開として作成する。
+   */
+  publishedAt?: string;
 };

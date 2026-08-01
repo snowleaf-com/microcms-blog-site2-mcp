@@ -89,7 +89,7 @@ export function createServer(env: Env) {
     "create_blog_post",
     {
       description:
-        "microCMS の blogs エンドポイントへ記事を作成します。tagId は必須です（先に list_tags で取得）。デフォルトは下書き。eyecatchUrl 省略時は既存記事と同じデフォルト画像を設定します。",
+        "microCMS の blogs エンドポイントへ記事を作成します。tagId は必須です（先に list_tags で取得）。デフォルトは下書き。eyecatchUrl 省略時は既存記事と同じデフォルト画像を設定します。過去日付で公開したい場合は publishedAt（ISO 8601）を指定してください（下書きには指定不可）。",
       inputSchema: z.object({
         title: z.string().min(1).describe("記事タイトル"),
         content: z
@@ -108,7 +108,13 @@ export function createServer(env: Env) {
         status: z
           .enum(["draft", "published"])
           .optional()
-          .describe("draft（既定）または published")
+          .describe("draft（既定）または published。publishedAt 指定時は公開扱い"),
+        publishedAt: z
+          .string()
+          .optional()
+          .describe(
+            "公開日時（ISO 8601。例: 2024-01-01T12:00:00+09:00）。過去・未来いずれも可。下書きには指定不可"
+          )
       })
     },
     async (input) => {
@@ -116,7 +122,8 @@ export function createServer(env: Env) {
         const result = await createBlogPost(env, input);
         return textResult({
           id: result.id,
-          status: input.status === "published" ? "published" : "draft",
+          status: result.status,
+          publishedAt: result.publishedAt,
           message: "記事を作成しました"
         });
       } catch (error) {

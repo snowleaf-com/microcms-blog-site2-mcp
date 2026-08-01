@@ -95,8 +95,33 @@ export async function uploadMedia(
   });
 }
 
+function normalizePublishedAt(value?: string) {
+  const trimmed = value?.trim();
+  if (!trimmed) {
+    return undefined;
+  }
+
+  const date = new Date(trimmed);
+  if (Number.isNaN(date.getTime())) {
+    throw new Error(
+      "publishedAt は ISO 8601 形式で指定してください（例: 2024-01-01T12:00:00+09:00）"
+    );
+  }
+
+  return date.toISOString();
+}
+
 export async function createBlogPost(env: MicroCmsEnv, input: CreateBlogInput) {
   const client = createContentClient(env);
+  const publishedAt = normalizePublishedAt(input.publishedAt);
+  const isDraft = input.status !== "published" && !publishedAt;
+
+  if (publishedAt && input.status === "draft") {
+    throw new Error(
+      "publishedAt は下書きには指定できません。status を published にするか省略してください"
+    );
+  }
+
   const content: Record<string, unknown> = {
     title: input.title,
     content: input.content,
@@ -107,9 +132,19 @@ export async function createBlogPost(env: MicroCmsEnv, input: CreateBlogInput) {
       DEFAULT_EYECATCH_URL
   };
 
-  return client.create({
+  if (publishedAt) {
+    content.publishedAt = publishedAt;
+  }
+
+  const result = await client.create({
     endpoint: "blogs",
     content,
-    isDraft: input.status !== "published"
+    isDraft
   });
+
+  return {
+    ...result,
+    publishedAt,
+    status: isDraft ? ("draft" as const) : ("published" as const)
+  };
 }
