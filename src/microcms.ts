@@ -1,5 +1,10 @@
 import { createClient, createManagementClient } from "microcms-js-sdk";
-import type { CreateBlogInput, MicroCmsEnv, Tag } from "./types";
+import {
+  DEFAULT_EYECATCH_URL,
+  type CreateBlogInput,
+  type MicroCmsEnv,
+  type Tag
+} from "./types";
 
 function normalizeServiceDomain(value?: string) {
   if (!value) {
@@ -100,9 +105,10 @@ export async function createBlogPost(env: MicroCmsEnv, input: CreateBlogInput) {
   if (input.excerpt) {
     content.excerpt = input.excerpt;
   }
-  if (input.eyecatchUrl) {
-    content.eyecatch = input.eyecatchUrl;
-  }
+  content.eyecatch =
+    input.eyecatchUrl?.trim() ||
+    env.DEFAULT_EYECATCH_URL?.trim() ||
+    DEFAULT_EYECATCH_URL;
   if (input.tagId) {
     content.tag = input.tagId;
   }

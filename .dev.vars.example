@@ -1,3 +1,5 @@
 MICROCMS_SERVICE_DOMAIN=your-service-domain
 MICROCMS_API_KEY=your-api-key
 MCP_PASSWORD=change-me
+# 省略時は no_image_yoko.jpg（既存記事と同じ）
+DEFAULT_EYECATCH_URL=https://images.microcms-assets.io/assets/be98a728f87c41ae9463c07722e0bc60/41d55133950e49c081c39614d9a72c4f/no_image_yoko.jpg
