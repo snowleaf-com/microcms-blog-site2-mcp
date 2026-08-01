@@ -59,9 +59,24 @@ MCP endpoint: `http://localhost:8787/mcp`
 
 ## デプロイ
 
+### 手動
+
 ```bash
 npm run deploy
 ```
+
+### main マージ時の自動デプロイ
+
+`main` への push（PR マージ含む）で GitHub Actions が Cloudflare Workers へデプロイします。
+
+初回だけ、リポジトリの Secrets に以下を設定してください。
+
+| Secret | 説明 |
+| --- | --- |
+| `CLOUDFLARE_API_TOKEN` | Workers 編集権限付き API トークン |
+| `CLOUDFLARE_ACCOUNT_ID` | Cloudflare アカウント ID |
+
+Worker の環境変数（`MICROCMS_*` / `MCP_PASSWORD` / `DEFAULT_EYECATCH_URL`）は Cloudflare 側の Secrets として保持され、コードだけ再デプロイしても消えません。値を変えるときは手動で `wrangler secret put` するか、ダッシュボードから更新してください。
 
 本番 URL 例: `https://microcms-blog-site-mcp.<account>.workers.dev/mcp`
 
