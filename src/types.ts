@@ -1,5 +1,5 @@
 export const DEFAULT_EYECATCH_URL =
-  "https://images.microcms-assets.io/assets/be98a728f87c41ae9463c07722e0bc60/41d55133950e49c081c39614d9a72c4f/no_image_yoko.jpg";
+  "https://images.microcms-assets.io/assets/be98a728f87c41ae9463c07722e0bc60/e90ce35d1d4d466abe621b81540ec718/snowleaf-eyecatch-default.jpg";
 
 export type MicroCmsEnv = {
   MICROCMS_SERVICE_DOMAIN: string;
