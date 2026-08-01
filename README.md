@@ -14,6 +14,7 @@ ChatGPT などから microCMS（`hono-blog-app` / SnowLeaf）へ記事投稿・�
 
 - `title` / `content` / `tag`（必須）
 - `eyecatch`（任意。`eyecatchUrl` 省略時はデフォルト画像を自動設定）
+- `publishedAt`（任意。ISO 8601。過去・未来の公開日時を指定可。下書きには指定不可）
 
 ## セットアップ
 
@@ -76,6 +77,18 @@ npm run deploy
 2. 返ってきた `url` を `create_blog_post` の `eyecatchUrl` に渡す
 3. 必要なら本文 HTML にも同じ画像 URL を埋め込む
 4. `status: "draft"` のまま作成し、microCMS 管理画面で確認
+
+過去日付で公開する場合:
+
+```json
+{
+  "title": "昔食べたカレーの話",
+  "content": "<p>...</p>",
+  "tagId": "wlfs4kve4",
+  "status": "published",
+  "publishedAt": "2024-03-15T12:00:00+09:00"
+}
+```
 
 ## 動作確認（MCP Inspector）
 
