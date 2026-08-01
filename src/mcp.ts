@@ -89,21 +89,22 @@ export function createServer(env: Env) {
     "create_blog_post",
     {
       description:
-        "microCMS の blogs エンドポイントへ記事を作成します。デフォルトは下書きです。eyecatchUrl 省略時は既存記事と同じデフォルト画像を設定します。別画像は upload_media の URL を eyecatchUrl に渡してください。",
+        "microCMS の blogs エンドポイントへ記事を作成します。tagId は必須です（先に list_tags で取得）。デフォルトは下書き。eyecatchUrl 省略時は既存記事と同じデフォルト画像を設定します。",
       inputSchema: z.object({
         title: z.string().min(1).describe("記事タイトル"),
         content: z
           .string()
           .min(1)
           .describe("本文（HTML）。画像は upload_media の url を img で埋め込めます"),
-        excerpt: z.string().optional().describe("抜粋"),
+        tagId: z
+          .string()
+          .min(1)
+          .describe("必須。tags API のコンテンツID（list_tags で取得）"),
         eyecatchUrl: z
           .string()
           .url()
           .optional()
           .describe("アイキャッチ画像URL（microCMS メディアURL）"),
-        tagId: z.string().optional().describe("tags API のコンテンツID"),
-        authorId: z.string().optional().describe("authors API のコンテンツID"),
         status: z
           .enum(["draft", "published"])
           .optional()

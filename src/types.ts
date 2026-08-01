@@ -20,9 +20,7 @@ export type Tag = {
 export type CreateBlogInput = {
   title: string;
   content: string;
-  excerpt?: string;
+  tagId: string;
   eyecatchUrl?: string;
-  tagId?: string;
-  authorId?: string;
   status?: "draft" | "published";
 };

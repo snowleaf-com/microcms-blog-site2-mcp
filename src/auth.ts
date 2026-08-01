@@ -45,7 +45,14 @@ app.get("/", (c) => {
 });
 
 app.get("/authorize", async (c) => {
-  const oauthReqInfo = await c.env.OAUTH_PROVIDER.parseAuthRequest(c.req.raw);
+  let oauthReqInfo: AuthRequest;
+  try {
+    oauthReqInfo = await c.env.OAUTH_PROVIDER.parseAuthRequest(c.req.raw);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    return c.text(message, 400);
+  }
+
   const clientInfo = await c.env.OAUTH_PROVIDER.lookupClient(
     oauthReqInfo.clientId
   );

@@ -12,8 +12,8 @@ ChatGPT などから microCMS（`hono-blog-app` / SnowLeaf）へ記事投稿・�
 
 記事スキーマは既存ブログと同じです。
 
-- `title` / `content`（必須）
-- `excerpt` / `eyecatch` / `tag` / `author`（任意。`eyecatchUrl` 省略時はデフォルト画像を自動設定）
+- `title` / `content` / `tag`（必須）
+- `eyecatch`（任意。`eyecatchUrl` 省略時はデフォルト画像を自動設定）
 
 ## セットアップ
 

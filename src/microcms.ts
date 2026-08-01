@@ -99,22 +99,13 @@ export async function createBlogPost(env: MicroCmsEnv, input: CreateBlogInput) {
   const client = createContentClient(env);
   const content: Record<string, unknown> = {
     title: input.title,
-    content: input.content
+    content: input.content,
+    tag: input.tagId,
+    eyecatch:
+      input.eyecatchUrl?.trim() ||
+      env.DEFAULT_EYECATCH_URL?.trim() ||
+      DEFAULT_EYECATCH_URL
   };
-
-  if (input.excerpt) {
-    content.excerpt = input.excerpt;
-  }
-  content.eyecatch =
-    input.eyecatchUrl?.trim() ||
-    env.DEFAULT_EYECATCH_URL?.trim() ||
-    DEFAULT_EYECATCH_URL;
-  if (input.tagId) {
-    content.tag = input.tagId;
-  }
-  if (input.authorId) {
-    content.author = input.authorId;
-  }
 
   return client.create({
     endpoint: "blogs",
