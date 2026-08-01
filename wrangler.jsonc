@@ -1,0 +1,16 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "microcms-blog-site-mcp",
+  "main": "src/index.ts",
+  "compatibility_date": "2025-07-28",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": {
+    "enabled": true
+  },
+  "kv_namespaces": [
+    {
+      "binding": "OAUTH_KV",
+      "id": "bcfb0054c5704c458233ed1e10ef1a34"
+    }
+  ]
+}
